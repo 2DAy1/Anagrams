@@ -1,30 +1,25 @@
-def split_text(main):
-    words = main.split(' ')
-    new_text = []
-    for i in words:
-        new_text.append(reverse(i))
-    new_text = " ".join(new_text)
-    return new_text
+def reverse_text(text):
+    words = text.split(' ')
+    return ' '.join(reverse_word(i) for i in words)
 
 
-def reverse(word):
-    count = 0
+def reverse_word(word):
     numbers = []
     wrong_letter = []
-
-    for letter in word:
-        count += 1
+    letters = []
+    for count, letter in enumerate(word):
         if not letter.isalpha():
-            word = word.replace(letter, '')
             wrong_letter.append(letter)
             numbers.append(count)
+        else:
+            letters.append(letter)
 
-    word = word[::-1]
+    letters.reverse()
 
     for i in range(0, len(numbers)):
-        word = word[:numbers[i] - 1] + wrong_letter[i] + word[numbers[i] - 1::]
+        letters.insert(numbers[i], wrong_letter[i])
 
-    return word
+    return ''.join(i for i in letters)
 
 
 if __name__ == '__main__':
@@ -39,4 +34,4 @@ if __name__ == '__main__':
     ]
 
     for text, reversed_text in cases:
-        assert split_text(text) == reversed_text
+        assert reverse_text(text) == reversed_text
